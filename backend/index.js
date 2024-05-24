@@ -1,14 +1,9 @@
 import { WebSocket, WebSocketServer } from 'ws';
-
-const wss = new WebSocketServer({ port: 8080 });
+const port = 8080;
+const wss = new WebSocketServer({ port: port });
 
 wss.on('connection', (ws) => {
   console.log('New client connected');
-
-  // Send a welcome message to the new client
-  // ws.send(JSON.stringify('Welcome to the server!'));
-
-  // Handle incoming messages from this client
   ws.on('message', (message) => {
     try {
       const parsedMessage = JSON.parse(message);
@@ -27,4 +22,4 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log('WebSocket server started on port 8080');
+console.log(`WebSocket server started on port ${port}`);
