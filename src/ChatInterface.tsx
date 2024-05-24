@@ -13,7 +13,7 @@ const ChatInterface: React.FC = () => {
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://13.235.103.165:8080');
+    const ws = new WebSocket('wss://13.235.103.165:8080');
     wsRef.current = ws;
 
     ws.onmessage = (event: MessageEvent) => {
