@@ -1,6 +1,21 @@
+import fs from 'fs';
+import https from 'https';
 import { WebSocket, WebSocketServer } from 'ws';
+
 const port = 8080;
-const wss = new WebSocketServer({ port: port });
+
+// Read the SSL certificate files
+const privateKey = fs.readFileSync('./key.pem', 'utf8');
+const certificate = fs.readFileSync('./cert.pem', 'utf8');
+
+// Create an HTTPS server
+const server = https.createServer({
+  key: privateKey,
+  cert: certificate
+});
+
+// Pass the HTTPS server to WebSocketServer
+const wss = new WebSocketServer({ server });
 
 wss.on('connection', (ws) => {
   console.log('New client connected');
@@ -22,4 +37,6 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log(`WebSocket server started on port ${port}`);
+server.listen(port, () => {
+  console.log(`WebSocket server started on port ${port}`);
+});
