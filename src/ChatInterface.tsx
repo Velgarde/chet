@@ -6,6 +6,36 @@ interface Message {
   user: string;
 }
 
+const ChatBubble: React.FC<{message: Message}> = ({ message }) => {
+  return (
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      backgroundColor: '#7DBEEC', 
+      borderRadius: '10px', 
+      padding: '10px', 
+      marginBottom: '10px' 
+    }}>
+      <span style={{
+        fontSize: '1em',
+        fontWeight: 'bold',
+        textAlign: 'left'
+      }}>{message.user}</span>
+      <span style={{
+        fontSize: '0.8em',
+        fontStyle: 'italic',
+        color: 'black'
+      }}>{message.text}</span>
+      <span style={{
+        fontSize: '0.7em',
+        opacity: 0.5,
+        marginLeft: 'auto',
+        fontStyle: 'italic'
+      }}>{new Date(message.id).toLocaleTimeString()}</span>
+    </div>
+  );
+};
+
 const ChatInterface: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>('');
@@ -90,22 +120,9 @@ const ChatInterface: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
       <div style={{ overflowY: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column-reverse' }}>
-        <ul style={{ textAlign: 'left' }}>
-          {messages.map((message) => (
-            <li key={message.id} style={{ display: 'flex' }}>
-              <span style={{
-                fontSize: '0.8em',
-                fontStyle: 'italic'
-              }}>{message.user}   :   {message.text}</span>
-              <span style={{
-                fontSize: '0.7em',
-                opacity: 0.5,
-                marginLeft: '70px',
-                fontStyle: 'italic'
-              }}>{new Date(message.id).toLocaleTimeString()}</span>
-            </li>
-          ))}
-        </ul>
+      {messages.map((message) => (
+        <ChatBubble key={message.id} message={message} />
+      ))}
       </div>
       <form onSubmit={handleNewMessage} style={{ display: 'flex', position: 'sticky' }}>
         <input
