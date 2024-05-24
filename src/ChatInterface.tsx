@@ -90,7 +90,7 @@ const ChatInterface: React.FC = () => {
             onChange={handleNewMessageChange}
             placeholder="Enter your username"
             style={{
-              padding: '5px 50px',
+              padding: '5px 60px',
               fontSize: '0.75em',
               borderRadius: '50px',
               border: '1px solid grey',
@@ -118,9 +118,9 @@ const ChatInterface: React.FC = () => {
     );
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '90vh' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '90vh'}}>
       <div style={{ overflowY: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column-reverse' }}>
-      {messages.map((message) => (
+      {[...messages].reverse().map((message) => (
         <ChatBubble key={message.id} message={message} />
       ))}
       </div>
